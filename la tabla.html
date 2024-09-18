@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Tabla Editable</title>
+    <style>
+        table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body background="tbl.jpg">
+    <center>
+    <h2>Tabla de Nombres</h2>
+
+    <form id="miFormulario">
+        <label for="nuevoTexto">Ingresa un texto:</label>
+        <input type="text" id="nuevoTexto">
+        <button type="button" onclick="agregarTexto()">Agregar</button>
+    </form>
+
+    <br>
+
+    <table id="miTabla">
+        <tr>
+          <th>Nombre</th>
+            <th></th>
+        </tr>
+    </table>
+
+    <script>
+        function agregarTexto() {
+            const tabla = document.getElementById('miTabla');
+            const nuevoTexto = document.getElementById('nuevoTexto').value;
+
+            if (nuevoTexto.trim() !== "") {
+                const fila = tabla.insertRow(-1);
+                const celdaTexto = fila.insertCell(0);
+                const celdaEliminar = fila.insertCell(1);
+
+                celdaTexto.textContent = nuevoTexto;
+                celdaEliminar.innerHTML = '<button type="button" onclick="eliminarFila(this)">Eliminar</button>';
+                
+                // Limpiar el campo de texto
+                document.getElementById('nuevoTexto').value = "";
+            } else {
+                alert("Por favor, ingrese un texto.");
+            }
+        }
+
+        function eliminarFila(boton) {
+            const fila = boton.parentNode.parentNode;
+            fila.parentNode.removeChild(fila);
+        }
+        window.onbeforeunload=function(event){
+            return"Si sales los datos se borraran. ¿Seguro que quieres abandonar?";
+        }
+    </script>
+    </center>
+
+</body>
+</html>
